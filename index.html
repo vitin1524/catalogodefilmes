@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Filmes - Fase 1: Cadastro Manual (DCM Básico)</title>
+
+    <link rel="stylesheat" href="style.css">
+
+</head>
+<body>
+    
+    <h1>Catálogo de Filmes</h1>
+
+    <form id="cadastro-filme">
+        <h2>Adicionar Novo Filme</h2>
+        <div>
+            <label for="titulo">Título do Filme</label>
+            <input type="text" id="titulo" required>
+        </div>
+
+        <div>
+            <label for="sinopse">Sinopse:</label>
+            <textarea id="sinopse" required></textarea>
+        </div>
+
+        <button type="submit">Adicionar Filme</button>
+    </form>
+
+    <hr>
+
+    <h2>Minha Lista de Filme</h2>
+
+    <div id="lista-filme">
+        <p>Nenhum filme cadasstrado ainda.</p>
+    </div>
+
+    <script>
+        // 1. ARMAZENAMENTO DE DADOS
+        // Array global que irá guardar todos os filmes como objetos.
+        // Ex: [{ titulo: 'Filme X',sinopse: 'Sinopse Y'}]
+        const catalogo = [];
+
+        // 2. CAPTURA DE ELEMENTOS DO DOM (Document object model)
+        // Capturamos os elementos HTML que vamos interagir, usando seus IDs.
+        const form = document.getElementByld('cadastro-filme');
+        const listaFilmesContainer = document.getElementById('lista-filmes');
+
+        // -------------------------------------------------------------------
+        // FUNÇÃO DE REMOÇÃO
+        // -------------------------------------------------------------------
+        /**
+         * Remove um filme do array de dados e do elemento HTML na tela.
+         * @param 
+</body>
+</html>
