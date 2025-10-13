@@ -3,7 +3,7 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Catálogo de Filmes Fase 1: Cadastro Manual (DOM Básico)</title>
+     <title>Catálogo de Filmes Fase 2 Consumo de API</title>
 
      <link rel="stylesheet" href="style.css">
 
@@ -13,19 +13,14 @@
     <h1>Catálogo de Filmes</h1>
 
     <form id="cadastro-filme">
-    <h2>Adicionar Novo Filme</h2>
+    <h2>Adicionar Novo Filme (Busca por API)</h2>
     <div>
         <label for="titulo">Título do Filme: </label>
         <input type="text" id="titulo" required>
         </div>
 
-        <div>
-        <label for="sinopse">Sinopse:</label>
-        <textarea id="sinopse" required></textarea>
-        </div>
-
-        <button type="submit">Adicionar Filme</button>
-</form>
+        <button type="submit">Buscar e Adicionar Filme</button>
+        </form>
 
 <hr>
 
@@ -36,11 +31,92 @@
 </div>
 
 <script>
+     // A CHAVE DA API OMDb (Substitua esta sring pela sua chave real!)
+     const API_KEY = 'SUA_CHAVE_OMDB_AQUI';
+
     // 1. ARMAZENAMENTO DE DADOS
-    // Array global que irá guardar todos os filmes como Objetos.
-    // Ex: [{ titulo: 'Filme X', sinopse: 'Sinopse Y' }]
     const catalogo = [];
 
+   // 2. CAPTURA DE ELEMENTOS DO DOM (Document Object Model)
+   const form = document.getElementById('cadastro-filme');
+   const tituoInput = document.getElementById('titulo');
+   const listaFilmesContainer = document.getElementById('lista-filmes');
+
+   //------------------------------------------------------------------------------------------
+   // FUNÇÃO DE REMOÇÃO (Mantida da fase 1)
+   //------------------------------------------------------------------------------------------
+    function removerFilme (indice, elementoDOM) {
+        catalogo.splice(indice, 1);
+        elementoDOM.remove();
+       
+        if (catalogo.length === 0) {
+              listaFilmesContainer.innerHTML = '<p>Nenhum filme cadastrado ainda.</p>';
+        }
+    }
+
+   //-------------------------------------------------------------------------------------
+   //FUNÇÃO RENDERIZAÇÃO (Adaptada para inclir o pôster)
+   //-------------------------------------------------------------------------------------
+function renderizarFilme (filme, indice) {
+   if (catalogo.length === 1) {
+       listaFilmesContainer.innerHTML = '';
+}
+
+     const filmeDiv = document.createElement('div');
+     filmeDiv.classList.add('filme-item');
+
+     // A. Elemento imagem (Pôster)
+     const imagemPoster = document.createElement('img');
+     imagemPoster.src = filme.poster && filme.poster !== 'N/A'
+                        ? filme.poster
+                        : 'https://via.placeholder.com/100x150?text=Poster+Nao+Disponiel';
+     imagemPoster.alt = `Pôster do filme ${filme.titulo}`;
+     imagemPoster.classList.add('filme-info');
+     
+     // B. Elementos do texto e info
+     const infoDiv = document.createElement('div');
+     infoDiv.classList.add('filme-info');
+
+     const tituloH3 = document.createElement("h3");
+     tituloH3.textContent = filme.titulo;
+
+     const sinopseP = document.createElement('p');
+     sinopseP.textContent = filme.sinopse;
+
+     const removerBotao = document.createElement('button');
+     removerBotao.textContent = 'Remover';
+     removerBotao.classList.add('btn-remover');
+     // C. Evento Remoção
+     removerBotao.addEventListener('click', () => {
+        const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titul);
+        if (indiceAtual > -1) {
+            removerFilme (indice, filmeDiv);
+        }
+});
+    // D. Montagem do DOM
+     filmeDiv.appendChild(tituloH3);
+     filmeDiv.appendChild(sinopseP);
+     filmeDiv.appendChild(removerBotao);
+     
+     filmeDiv.appendChild(imagemPoster);
+     filmeDiv.appendChild(infoDiv);
+
+     listaFilmesContainer.appendChild(filmeDiv);
+}
+
+     //------------------------------------------------------------------
+     // FUNÇÃO PRINCIPAL DE ADIÇÃO (Assíncrona para a API)
+     //------------------------------------------------------------------
+     async function adicionarFilme(event) {
+        evento.preventDefault();
+
+        const titulo = tituloInput.value.trim();
+        if (!titulo) return;
+
+        const tituloFormatado = encodeURIComponent(titulo);
+        const url = 
+        
+     }
    // 2. CAPTURA DE ELEMENTOS DO DOM (Document Object Model)
    // Capturamos os elementos HTML que vamos interagir, usando seus IDs.
    const form = document.getElementById('cadastro-filme');
@@ -146,6 +222,22 @@ function renderizarFilme (filme, indice) {
      
        const tituloInput = document.getElementById('titulo');
      const sinopseInput = document.getElementById('sinopse');
+       // Cria o objeto JavaScript com os dados
+     
+       const novoFilme = {
+       titulo: tituloInput.value,
+       sinopse: sinopseInput.value
+};
+
+     //5. Armazena o filme no Array
+     // O método.push() adiciona o novo objeto no final do array 'catalogo'.
+     catalogo.push (novoFilme);
+     // 6. Renderiza na Tela
+     // Passamos o novo objeto e seu indice (que sempre o último, ou seja, tamanho - 1)
+     renderizarFilme (novoFilme, catalogo.length - 1);
+
+     
+     // 7. Limpa eInput = document.getElementById('sinopse');
        // Cria o objeto JavaScript com os dados
      
        const novoFilme = {
