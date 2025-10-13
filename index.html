@@ -114,7 +114,31 @@ function renderizarFilme (filme, indice) {
         if (!titulo) return;
 
         const tituloFormatado = encodeURIComponent(titulo);
-        const url = 
+        const url = `https:www.omdbapi.com/?apikey=${API_KEY}&t=${tituloFormatado}`;
+
+        try {
+          const resposta = await fetch(url);
+          const dadosDoFilme = await resposta.json();
+
+          if (dadosDoFilme.Response === "True") {
+
+               const novoFilme = {
+                    titulo: dadosDoFilme.Title,
+                    sinopse: dadosDoFilme.Plot,
+                    poster: dadosDoFilme.Poster,
+               };
+
+               catalogo.push(novoFilme);
+               renderizarFilme(novoFilme, catalogo.length - 1);
+
+          } else {
+               alert(`Filme não encontrado na OMDb: "${titulo}."`);
+          }
+
+        } catch (error) {
+          alert(`Ocorreu um erro ao tentar buscar o filme na API. Verifique sua chave.`);
+          console.error(`Erro de fetch:`, error);
+        }
         
      }
    // 2. CAPTURA DE ELEMENTOS DO DOM (Document Object Model)
