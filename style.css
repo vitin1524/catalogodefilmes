@@ -7,7 +7,7 @@ body {
     h1, h2 {
         color: #333;
     }
-    form{
+    form {
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 5px;
@@ -19,13 +19,15 @@ body {
         font-weight: bold;
     }
     input[type="text"], textarea {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box; /* Garante que padding e border não aumentam a largura total */
+       width: 100%;
+       padding: 8px;
+       margin-bottom: 10px;
+       border: 1px solid #ccc;
+       border-radius: 4px;
+       /* Garante que padding e border não aumentem a largura total */
+       box-sizing: border-box;
     }
+    /* Esta era a declaração que estava incorreta no código original */
     textarea {
         resize: vertical;
         min-height: 80px;
@@ -39,7 +41,7 @@ body {
         cursor: pointer;
     }
     button:hover {
-        background-color: #0056b3;
+        background-color: #005663;
     }
     /* Estilo para cada item de filme na lista */
     .filme-item {
