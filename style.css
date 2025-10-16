@@ -3,31 +3,32 @@ body {
         padding: 20px;
         max-width: 800px;
         margin: 0 auto;
+        background-color: #f4f4f4;
     }
     h1, h2 {
         color: #333;
     }
     form {
+        background: #fff;
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 5px;
         margin-bottom: 20px;
+        box-shadow:  2px 4px rgba(0,0,0,0.1);
     }
     label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
     }
-    input[type="text"], textarea {
+    input[type="text"] {
        width: 100%;
        padding: 8px;
        margin-bottom: 10px;
        border: 1px solid #ccc;
        border-radius: 4px;
-       /* Garante que padding e border não aumentem a largura total */
        box-sizing: border-box;
     }
-    /* Esta era a declaração que estava incorreta no código original */
     textarea {
         resize: vertical;
         min-height: 80px;
@@ -39,30 +40,54 @@ body {
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        transition: background-color 0.2s;
     }
     button:hover {
         background-color: #005663;
     }
-    /* Estilo para cada item de filme na lista */
+
+    /*----------------------------------------------------------------------*/
+    /* ESTILOS PARA A FASE 2: LISTA COM PÔSTER (Flexbox) */
+    /*----------------------------------------------------------------------*/
+
+    /* Contêiner do Filme: Organiza imagem e texto*/
     .filme-item {
+        display: flex; /* Habilita o alinhamento lado a lado */
+        align-items: flex-start; /* Alinha o conteúdo ao topo */
         border: 1px solid #ccc;
         padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 4px;
+        margin-bottom: 20px;
+        border-radius: 8px;
         background-color: #f9f9f9;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
-    .filme-item h3 {
+    .filme-poster {
+        width: 100px;
+        height: 150px;
+        object-fit: cover;
+        margin-right: 15px; /* Espaço entre o pôster e o texto */
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    /* Estilo do bloco de informações */
+    .filme-info {
+        flex-grow: 1; /* ocupa o espaço restante */
+    }
+
+    .filme-info h3 {
         margin-top: 0;
-        border-bottom: 1px dashed #eee;
-        padding-bottom: 5px;
+        color: #007bff;
+        font-size: 1,2em;
     }
-    .filme-item p {
-        font-style: italic;
-        margin-bottom: 10px;
+    .filme-info p {
+        font-style: normal;
+        color: #555;
+        margin-bottom: 15px;
+        line-height: 1.4;
     }
+
+    /* Botão remover */
     .filme-item .btn-remover {
         background-color: #dc3545;
-    }
-    .filme-item .btn-remover:hover {
-        background-color: #c82333;
     }
