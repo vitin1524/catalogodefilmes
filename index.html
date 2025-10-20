@@ -82,8 +82,7 @@
                 const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titulo);
                 if (indiceAtual > -1) removerFilme(indiceAtual, filmeDiv);
 
-                }
- );
+        });
 
             // D. montagem do DOM
             infoDiv.appendChild(tituloH3);
@@ -100,10 +99,10 @@
             evento.preventDefault();
             
             const titulo = tituloInput.value.trim();
-            if (!titulo) return; // Se não houver título, não prossegue
+            if (!titulo) return;
 
             const tituloFormatado = encodeURIComponent(titulo);
-            const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${tituloFormatado}`;
+            const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}&lang=pt`;
 
             try {
                 const resposta = await fetch(url);
@@ -116,25 +115,30 @@
                         poster: dadosdoFilme.Poster,
                     };
 
-                    // Armazenamento no catálogo e renderização
                     catalogo.push(novoFilme);
-                    salvarCatalogo
+                    salvarCatalogo();
                     renderizarFilme(novoFilme, catalogo.length - 1);
                 } else {
                     alert(`Filme não encontrado na OMDB: "${titulo}".`);
                 }
             } catch (error) {
-                alert('Ocorreu um erro ao tentar buscar o filme na API. Verifique sua chave.');
-                console.error('Erro de fetch:', error);
+                alert('Erro ao buscar o filme na API.');
+                console.error('Erro:', erro);
             }
 
             form.reset();
         }
 
-        // 8. ESCUTANDO O EVENTO DO BOTÃO/FORMULARIO
-        form.addEventListener('submit', adicionarFilme);
+        // Recarregar lista ao abrir a página
+        function carregarCatalogo() {
+            if (catalo.length > 0) {
+                listaFilmesContainer.innerHTML = '';
+                catalogo.forEach((filme, i) => renderizarFilme(filme, i));
+            }
+        }
 
-        console.log("JavaScript Carregado. Pronto para iniciar o catálogo!");
+        form.addEventListener('submit', adicionarFilme);
+        carregarCatalogo();
     </script>
 </body>
 </html>
