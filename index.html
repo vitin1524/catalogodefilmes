@@ -39,31 +39,25 @@
         const listaFilmesContainer = document.getElementById('lista-filmes');
 
         // FUNÇÃO DE REMOÇÃO
-        function salvarCatalogo()
+        function salvarCatalogo() {
+            localStorage.setItem('catalogo', JSON.stringify(catalogo));
+        }
         
         function removerFilme(indice, elementoDOM) {
             catalogo.splice(indice, 1);
+            salvarCatalogo();
             elementoDOM.remove();
             if (catalogo.length === 0) {
                 listaFilmesContainer.innerHTML = '<p>Nenhum filme cadastrado ainda.</p>';
             }
-
-            console.log(`Filme no indice ${indice} removido. Catálogo atualizado:`, catalogo);
         }
 
-        //-------------------------------------------------------------------------------------
-        // FUNÇÃO RENDERIZAÇÃO
-        //-------------------------------------------------------------------------------------
-
         function renderizarFilme(filme, indice) {
-            if (catalogo.length === 1) {
-                listaFilmesContainer.innerHTML = '';
-            }
+            if (catalogo.length === 1) listaFilmesContainer.innerHTML = '';
 
             const filmeDiv = document.createElement('div');
             filmeDiv.classList.add('filme-item');
 
-            // A. elemento imagem (poster)
             const imagemPoster = document.createElement('img');
             imagemPoster.src = filme.poster && filme.poster !== 'N/A'
                 ? filme.poster
@@ -71,7 +65,6 @@
             imagemPoster.alt = `Poster do filme ${filme.titulo}`;
             imagemPoster.classList.add('filme-poster');
 
-            // B. elementos de texto e info
             const infoDiv = document.createElement('Div');
             infoDiv.classList.add('filme-info');
 
@@ -79,19 +72,18 @@
             tituloH3.textContent = filme.titulo;
 
             const sinopseP = document.createElement('p');
-            sinopseP.textContent = filme.sinopse;
+            sinopseP.textContent = filme.sinopse || 'Sinopse não disponível.';
 
             const removerBotao = document.createElement('button');
             removerBotao.textContent = 'Remover';
             removerBotao.classList.add('btn-remover');
 
-            // C. Evento de remoção
             removerBotao.addEventListener('click', () => {
                 const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titulo);
-                if (indiceAtual > -1) {
-                    removerFilme(indice, filmeDiv);
+                if (indiceAtual > -1) removerFilme(indiceAtual, filmeDiv);
+
                 }
-            });
+ );
 
             // D. montagem do DOM
             infoDiv.appendChild(tituloH3);
