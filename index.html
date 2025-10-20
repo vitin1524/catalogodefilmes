@@ -28,24 +28,22 @@
     </div>
 
     <script>
-        const API_KEY = '52cb694a'; // Substitua com a sua chave da API
+        const API_KEY = '52cb694a';
 
         // 1. ARMAZENAMENTO DE DADOS
-        const catalogo = [];
+        const catalogo = JSON.parse(localStorage.getItem('catalogoFilmes')) || [];
 
-        // 2. CAPTURA DE ELEMENTOS DO DOM (Document Object Model)
+        // 2. ELEMENTOS DO DOM
         const form = document.getElementById('cadastro-filme');
         const tituloInput = document.getElementById('titulo');
         const listaFilmesContainer = document.getElementById('lista-filmes');
 
-        //------------------------------------------------------------------------------------------
-        // FUNÇÃO DE REMOÇÃO (mantida da fase 1)
-        //------------------------------------------------------------------------------------------
-
+        // FUNÇÃO DE REMOÇÃO
+        function salvarCatalogo()
+        
         function removerFilme(indice, elementoDOM) {
             catalogo.splice(indice, 1);
             elementoDOM.remove();
-
             if (catalogo.length === 0) {
                 listaFilmesContainer.innerHTML = '<p>Nenhum filme cadastrado ainda.</p>';
             }
@@ -128,6 +126,7 @@
 
                     // Armazenamento no catálogo e renderização
                     catalogo.push(novoFilme);
+                    salvarCatalogo
                     renderizarFilme(novoFilme, catalogo.length - 1);
                 } else {
                     alert(`Filme não encontrado na OMDB: "${titulo}".`);
