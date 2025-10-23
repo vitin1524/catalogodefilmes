@@ -105,10 +105,7 @@
 
         async function adicionarFilme(evento) {
             evento.preventDefault();
-            
             const titulo = tituloInput.value.trim();
-            const sinopseManual = sinopseInput.value.trim();
-
             if (!titulo) return;
 
             const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}&lang=pt`;
@@ -118,21 +115,21 @@
                 const dadosdoFilme = await resposta.json();
 
                 if (dadosdoFilme.Response === "True") {
-                    const novoFilme = {
-                        titulo: dadosdoFilme.Title,
-                        sinopse: dadosdoFilme.Plot || sinopseManual || 'Sinopse não disponível.',
-                        poster: dadosdoFilme.Poster,
-                    };
-
+                   if (catalogo.some(f => ff.titulo === dadosdoFilme.Title)) {
+                    alert(`O filme "${dadosdoFilme.Title}" já está no seu catálogo.`);
+                    form.reset();
+                    return;
+                   };
+                
                     catalogo.push(novoFilme);
                     salvarCatalogo();
                     renderizarFilme(novoFilme, catalogo.length - 1);
                 } else {
-                    alert(`Filme não encontrado na OMDB: "${titulo}".`);
+                    alert(`Filme não encontrado na OMDB: "${titulo}". Verifique o nome.`);
                 }
             } catch (error) {
-                alert('Erro ao buscar filme na API.');
-                console.error('Erro:', error);
+                alert('Erro ao buscar filme na API. Verifique sua conexão ou a chave de API .');
+                console.error('Erro:', erro);
             }
 
             form.reset();
