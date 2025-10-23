@@ -28,19 +28,17 @@
     </div>
 
     <script>
+        // Use sua chave da OMDB API aqui
         const API_KEY = '52cb694a'; 
+        let catalogo = JSON.parse(localStorage.getItem('catalogo')) || [];
 
-        // 1. ARMAZENAMENTO DE DADOS
-        const catalogo = JSON.parse(localStorage.getItem('catalogoFilme')) || [];
-
-        // 2. CAPTURA DE ELEMENTOS
         const form = document.getElementById('cadastro-filme');
         const tituloInput = document.getElementById('titulo');
-        const sinopseInput = document.getElementById('sinopse');
         const listaFilmesContainer = document.getElementById('lista-filmes');
 
+        // Salva no localStorage
         function salvarCatalogo() {
-            localStorage.setItem('catalogoFilme', JSON.stringify(catalogo));
+            localStorage.setItem('catalogo', JSON.stringify(catalogo));
         }
 
         function removerFilme(indice, elementoDOM) {
@@ -53,7 +51,10 @@
         }
 
         function renderizarFilme(filme, indice) {
-            if (catalogo.length === 1) listaFilmesContainer.innerHTML = '';
+            // Se for o primeiro item a ser adicionado, limpa a mensagem "Nenhum filme cadastrado"
+            if (catalogo.length === 1 && listaFilmesContainer.querySelector('p')) {
+                listaFilmesContainer.innerHTML = '';
+            }
 
             const filmeDiv = document.createElement('div');
             filmeDiv.classList.add('filme-item');
@@ -61,8 +62,8 @@
             const imagemPoster = document.createElement('img');
             imagemPoster.src = filme.poster && filme.poster !== 'N/A'
                 ? filme.poster
-                : 'https://via.placeholder.com/100x150?text=Poster+Indisponível';
-            imagemPoster.alt = `Poster do filme ${filme.titulo}`;
+                : 'https://via.placeholder.com/100x150?text=Poster+Nao+Disponível';
+            imagemPoster.alt = `Pôster do filme ${filme.titulo}`;
             imagemPoster.classList.add('filme-poster');
 
             const infoDiv = document.createElement('div');
@@ -73,6 +74,14 @@
 
             const sinopseP = document.createElement('p');
             sinopseP.textContent = filme.sinopse || 'Sinopse não disponível.';
+
+            // NOVO: Link para o  trailer no youtube
+            const trailerLink = document.createElement('a');
+            const termoBusca = encodeURIComponent(`${filme.titulo} trailer oficial`);
+            trailerLink.href = `https://www.youtube.com/results?search_query=${termoBusca}`;
+            trailerLink.target = '_blank';
+            trailerLink.textContent = '▶️ Ver Trailer (YouTube)';
+            trailerLink.classList.add('btn-trailer')
 
             const removerBotao = document.createElement('button');
             removerBotao.textContent = 'Remover';
@@ -85,6 +94,7 @@
 
             infoDiv.appendChild(tituloH3);
             infoDiv.appendChild(sinopseP);
+            infoDiv.appendChild(trailerLink);
             infoDiv.appendChild(removerBotao);
 
             filmeDiv.appendChild(imagemPoster);
