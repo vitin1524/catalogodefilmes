@@ -1,149 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Filmes Fase 2: Consumo de API</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Filmes Fase 2: Consumo de API</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Catálogo de Filmes</h1>
-    <form id="cadastro-filme">
-        <h2>Adicionar Novo Filme (buscar por API)</h2>
-        <div>
-            <label for="titulo">Título do Filme: </label>
-            <input type="text" id="titulo" required>
-        </div>
-        <div>
-            <label for="sinopse">Sinopse:</label>
-            <textarea id="sinopse" placeholder="Digite uma sinopse (opcional)"></textarea>
-        </div>
-        <button type="submit">Adicionar Filme</button>
-    </form>
+  <h1>Catálogo de Filmes</h1>
 
-    <hr>
-    <h2>Minha Lista de Filmes</h2>
-    <div id="lista-filmes">
-        <p>Nenhum filme cadastrado ainda.</p>
+  <form id="cadastro-filme">
+    <h2>Adicionar Novo Filme (buscar por API)</h2>
+    <div>
+      <label for="titulo">Título do Filme: </label>
+      <input type="text" id="titulo" required>
     </div>
+    <div>
+      <label for="sinopse">Sinopse (opcional):</label>
+      <textarea id="sinopse" placeholder="Digite uma sinopse (opcional)"></textarea>
+    </div>
+    <button type="submit">Buscar e Adicionar Filme</button>
+  </form>
 
-    <script>
-        // Use sua chave da OMDB API aqui
-        const API_KEY = '52cb694a'; 
-        let catalogo = JSON.parse(localStorage.getItem('catalogo')) || [];
+  <hr>
+  <h2>Minha Lista de Filmes</h2>
+  <div id="lista-filmes">
+    <p>Nenhum filme cadastrado ainda.</p>
+  </div>
 
-        const form = document.getElementById('cadastro-filme');
-        const tituloInput = document.getElementById('titulo');
-        const listaFilmesContainer = document.getElementById('lista-filmes');
+  <script>
+    const API_KEY = 'f55f96f2';
+    let catalogo = JSON.parse(localStorage.getItem('catalogo')) || [];
 
-        // Salva no localStorage
-        function salvarCatalogo() {
-            localStorage.setItem('catalogo', JSON.stringify(catalogo));
-        }
+    const form = document.getElementById('cadastro-filme');
+    const tituloInput = document.getElementById('titulo');
+    const sinopseInput = document.getElementById('sinopse');
+    const listaFilmesContainer = document.getElementById('lista-filmes');
 
-        function removerFilme(indice, elementoDOM) {
-            catalogo.splice(indice, 1);
-            salvarCatalogo();
-            elementoDOM.remove();
-            if (catalogo.length === 0) {
-                listaFilmesContainer.innerHTML = '<p>Nenhum filme cadastrado ainda.</p>';
-            }
-        }
+    function salvarCatalogo() {
+      localStorage.setItem('catalogo', JSON.stringify(catalogo));
+    }
 
-        function renderizarFilme(filme, indice) {
-            // Se for o primeiro item a ser adicionado, limpa a mensagem "Nenhum filme cadastrado"
-            if (catalogo.length === 1 && listaFilmesContainer.querySelector('p')) {
-                listaFilmesContainer.innerHTML = '';
-            }
+    function removerFilme(indice, elementoDOM) {
+      catalogo.splice(indice, 1);
+      salvarCatalogo();
+      elementoDOM.remove();
+      if (catalogo.length === 0) {
+        listaFilmesContainer.innerHTML = '<p>Nenhum filme cadastrado ainda.</p>';
+      }
+    }
 
-            const filmeDiv = document.createElement('div');
-            filmeDiv.classList.add('filme-item');
+    function renderizarFilme(filme, indice) {
+      if (catalogo.length === 1 && listaFilmesContainer.querySelector('p')) {
+        listaFilmesContainer.innerHTML = '';
+      }
 
-            const imagemPoster = document.createElement('img');
-            imagemPoster.src = filme.poster && filme.poster !== 'N/A'
-                ? filme.poster
-                : 'https://via.placeholder.com/100x150?text=Poster+Nao+Disponível';
-            imagemPoster.alt = `Pôster do filme ${filme.titulo}`;
-            imagemPoster.classList.add('filme-poster');
+      const filmeDiv = document.createElement('div');
+      filmeDiv.classList.add('filme-item');
 
-            const infoDiv = document.createElement('div');
-            infoDiv.classList.add('filme-info');
+      const imagemPoster = document.createElement('img');
+      imagemPoster.src = filme.poster && filme.poster !== 'N/A'
+        ? filme.poster
+        : 'https://via.placeholder.com/100x150?text=Poster+Nao+disponível';
+      imagemPoster.alt = `Poster do filme ${filme.titulo}`;
+      imagemPoster.classList.add('filme-poster');
 
-            const tituloH3 = document.createElement('h3');
-            tituloH3.textContent = filme.titulo;
+      const infoDiv = document.createElement('div');
+      infoDiv.classList.add('filme-info');
 
-            const sinopseP = document.createElement('p');
-            sinopseP.textContent = filme.sinopse || 'Sinopse não disponível.';
+      const tituloH3 = document.createElement('h3');
+      tituloH3.textContent = filme.titulo;
 
-            // NOVO: Link para o  trailer no youtube
-            const trailerLink = document.createElement('a');
-            const termoBusca = encodeURIComponent(`${filme.titulo} trailer oficial`);
-            trailerLink.href = `https://www.youtube.com/results?search_query=${termoBusca}`;
-            trailerLink.target = '_blank';
-            trailerLink.textContent = '▶️ Ver Trailer (YouTube)';
-            trailerLink.classList.add('btn-trailer')
+      const sinopseP = document.createElement('p');
+      sinopseP.textContent = filme.sinopse || 'Sinopse não disponível.';
 
-            const removerBotao = document.createElement('button');
-            removerBotao.textContent = 'Remover';
-            removerBotao.classList.add('btn-remover');
+      const trailerLink = document.createElement('a');
+      const termoBuscar = encodeURIComponent(`${filme.titulo} trailer oficial`);
+      trailerLink.href = `https://www.youtube.com/results?search_query=${termoBuscar}`;
+      trailerLink.target = '_blank';
+      trailerLink.textContent = '▶️ Ver Trailer (YouTube)';
+      trailerLink.classList.add('btn-trailer');
 
-            removerBotao.addEventListener('click', () => {
-                const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titulo);
-                if (indiceAtual > -1) removerFilme(indiceAtual, filmeDiv);
-            });
+      const removerBotao = document.createElement('button');
+      removerBotao.textContent = 'Remover';
+      removerBotao.classList.add('btn-remover');
+      removerBotao.addEventListener('click', () => {
+        const indiceAtual = catalogo.findIndex(f => f.titulo === filme.titulo);
+        if (indiceAtual > -1) removerFilme(indiceAtual, filmeDiv);
+      });
 
-            infoDiv.appendChild(tituloH3);
-            infoDiv.appendChild(sinopseP);
-            infoDiv.appendChild(trailerLink);
-            infoDiv.appendChild(removerBotao);
+      infoDiv.appendChild(tituloH3);
+      infoDiv.appendChild(sinopseP);
+      infoDiv.appendChild(trailerLink);
+      infoDiv.appendChild(removerBotao);
 
-            filmeDiv.appendChild(imagemPoster);
-            filmeDiv.appendChild(infoDiv);
+      filmeDiv.appendChild(imagemPoster);
+      filmeDiv.appendChild(infoDiv);
 
-            listaFilmesContainer.appendChild(filmeDiv);
-        }
+      listaFilmesContainer.appendChild(filmeDiv);
+    }
 
-        async function adicionarFilme(evento) {
-            evento.preventDefault();
-            const titulo = tituloInput.value.trim();
-            if (!titulo) return;
+    async function adicionarFilme(evento) {
+      evento.preventDefault();
 
-            const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}&lang=pt`;
+      const titulo = tituloInput.value.trim();
+      const sinopse = sinopseInput.value.trim();
 
-            try {
-                const resposta = await fetch(url);
-                const dadosdoFilme = await resposta.json();
+      if (!titulo) return;
 
-                if (dadosdoFilme.Response === "True") {
-                   if (catalogo.some(f => ff.titulo === dadosdoFilme.Title)) {
-                    alert(`O filme "${dadosdoFilme.Title}" já está no seu catálogo.`);
-                    form.reset();
-                    return;
-                   };
-                
-                    catalogo.push(novoFilme);
-                    salvarCatalogo();
-                    renderizarFilme(novoFilme, catalogo.length - 1);
-                } else {
-                    alert(`Filme não encontrado na OMDB: "${titulo}". Verifique o nome.`);
-                }
-            } catch (error) {
-                alert('Erro ao buscar filme na API. Verifique sua conexão ou a chave de API .');
-                console.error('Erro:', erro);
-            }
+      const url = `https://www.omdbapi.com/?apikey=${API_KEY}&t=${encodeURIComponent(titulo)}&lang=pt`;
 
+      try {
+        const resposta = await fetch(url);
+        const dadosdoFilme = await resposta.json();
+
+        if (dadosdoFilme.Response === "True") {
+          if (catalogo.some(f => f.titulo.toLowerCase() === dadosdoFilme.Title.toLowerCase())) {
+            alert(`O filme "${dadosdoFilme.Title}" já está no seu catálogo.`);
             form.reset();
-        }
+            return;
+          }
 
-        function carregarCatalogo() {
-            if (catalogo.length > 0) {
-                listaFilmesContainer.innerHTML = '';
-                catalogo.forEach((filme, i) => renderizarFilme(filme, i));
-            }
-        }
+          const novoFilme = {
+            titulo: dadosdoFilme.Title,
+            sinopse: sinopse || dadosdoFilme.Plot,
+            poster: dadosdoFilme.Poster
+          };
 
-        form.addEventListener('submit', adicionarFilme);
-        carregarCatalogo();
-    </script>
+          catalogo.push(novoFilme);
+          salvarCatalogo();
+          renderizarFilme(novoFilme, catalogo.length - 1);
+        } else {
+          alert(`Filme não encontrado: "${titulo}". Verifique o nome.`);
+        }
+      } catch (error) {
+        alert('Erro ao buscar filme na API. Verifique sua conexão ou chave de API.');
+        console.error('Erro:', error);
+      }
+
+      form.reset();
+    }
+
+    function carregarCatalogo() {
+      if (catalogo.length > 0) {
+        listaFilmesContainer.innerHTML = '';
+        catalogo.forEach((filme, i) => renderizarFilme(filme, i));
+      }
+    }
+
+    form.addEventListener('submit', adicionarFilme);
+    carregarCatalogo();
+    
+  </script>
 </body>
 </html>
