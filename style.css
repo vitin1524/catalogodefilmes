@@ -99,3 +99,18 @@ button:hover {
     transition: background-color 0.2s;
     font-size: 0.8em;
 }
+
+.btn-trailer:hover {
+    background-color: #cc0000;
+}
+
+.filme-item .btn-remover {
+    background-color: #dc3545;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+.filme-item .btn-remover:hover {
+    background-color: #c82333;
+}
