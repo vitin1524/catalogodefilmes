@@ -154,5 +154,22 @@ a {
         display: block;
     }
 
+    .controls-section {
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+    }
 
+    .search-bar {
+        width: 100%;
+        max-width: none;
+    }
+
+    .filter-dropdown {
+        width: 100%;
+    }
+
+    .lista-filmes {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
