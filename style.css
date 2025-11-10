@@ -129,4 +129,19 @@ a {
     color: #f0f0f0;
 }
 
+.botao-adicionar {
+    background-color: #00e0b3;
+    color: #1f1f1f;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botao-adicionar:hover {
+    background-color: #00e0b3;
+}
+
 
