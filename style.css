@@ -71,4 +71,62 @@ a {
     width: 100%;
 }
 
+.filter-dropdown {
+    width: auto;
+    cursor: pointer;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+.lista-filmes {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+}
+
+.card-filme {
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+}
+
+.card-filme:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+}
+
+.poster-filme {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 2/3;
+}
+
+.avaliacao {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0,0,0,0.7);
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.card-detalhes {
+    padding: 15px;
+}
+
+.titulo-filme {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
 
