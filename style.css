@@ -37,7 +37,7 @@ a {
     font-size: 1em;
     transition: color 0.2;
 }
-    
+
 .nav-menu a:hover {
     color: #00e0b3;
 }
@@ -61,7 +61,8 @@ a {
     flex-wrap: wrap;
 }
 
-.search_input, .filter-dropdown {
+.search_input,
+.filter-dropdown {
     padding: 10px 15px;
     border-radius: 20px;
     border: 1px solid #444;
@@ -92,13 +93,13 @@ a {
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
 }
 
 .card-filme:hover {
     transform: translateY(-8px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
 }
 
 .poster-filme {
@@ -112,7 +113,7 @@ a {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 5px 8px;
     border-radius: 5px;
     font-size: 0.9em;
@@ -144,4 +145,14 @@ a {
     background-color: #00e0b3;
 }
 
+@media (max-widht: 768px) {
+    .nav-menu a {
+        display: none;
+    }
 
+    .menu-toggle {
+        display: block;
+    }
+
+
+}
