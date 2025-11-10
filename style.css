@@ -60,3 +60,15 @@ a {
     background-color: #121212;
     flex-wrap: wrap;
 }
+
+.search_input, .filter-dropdown {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    font-size: 1em;
+    width: 100%;
+}
+
+
