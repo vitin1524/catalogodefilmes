@@ -32,7 +32,7 @@ return card;
 
 // --- B. Função Principal de Busca ---
 /**
- * Busca o filme na OMDB e atualiza o container.
+ * Busca o filme na OMDB e atualiza o container..
  * @param {string} termo - Termo de busca digitado pelo usuário.
  */
 async function buscarFilmes(termo) {
@@ -84,4 +84,4 @@ searchInput.addEventListener('input', (event) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     buscarFilmes('popular');
-});
+}); 
