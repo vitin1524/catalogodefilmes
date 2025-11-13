@@ -69,3 +69,19 @@ async function buscarDetalhes(imdbID) {
         console.error("Erro ao buscar detalhes:", error);
     }
 }
+
+function buscarEExibirDetalhes(imdbID) {
+    alert(`Funcionalidade de Detalhes/Trailer para o ID: ${imdbID} (Ainda precisa ser implementada).`);
+}
+
+let searchTimeout;
+searchInput.addEventListener('input', (event) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() =>{
+        buscarFilmes(event.target.value.trim());
+    }, 500);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    buscarFilmes('popular');
+});
