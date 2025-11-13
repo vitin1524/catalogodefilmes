@@ -56,7 +56,7 @@ async function buscarFilmes(termo) {
         }
     } catch (error) {
         console.error("Erro ao buscar filmes:", error);
-        listaFilmesContainer.innerHTML = `<p style="text-align: center; color: red;">Erro na conexão com a API.</p>`;
+        listaFilmesContainer.innerHTML = '<p style="text-align: center; color: red;">Erro na conexão com a API.</p>';
     }
 }
 
