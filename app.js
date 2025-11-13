@@ -12,5 +12,51 @@ function criarCardFilme(filme) {
     card.classList.add(`card-filme`);
     card.dataset.imdbId = filme.imdbID;
     const rating = filme.imdbRating ? `⭐ ${filme.imdbRating}` : `⭐ N/A`
-    
+    card.innerHTML = `
+    <img src="${filme.poster !== 'N/A' ? filme.poster : 'placeholder.jpg'}"
+        alt="${filme.title}"
+        class="poster-filme">
+    <span class="avaliacao">${rating}</span>
+    <div class="card-detalhes">
+        <h3 class="titulo-filme">${filme.title} (${filme.year})</h3>
+        <buttton class="botao-adicionar" data-title="${filme.title}">
+            + Minha Lista
+        </button>
+    </div>
+`;
+
+card.addEventListener(`click`, () => buscarEExibirDetalhes(filme.imdbID));
+
+return card;
 }
+
+// --- B. Função Principal de Busca ---
+/**
+ * Busca o filme na OMDB e atualiza o container.
+ * @param {string} termo - Termo de busca digitado pelo usuário.
+ */
+async function buscarFilmes(termo) {
+    if (!termo) return;
+    listaFilmesContainer.innerHTML = `<p style="text-align: center; color: gray;">Carregando...</p>`;
+
+    try {
+        const response = await fetch(`https://www.omdbapi.com/?s=${termo}&apikey=${OMDB_API_KEY}`);
+        const data = await response.json();
+        listaFilmesContainer.innerHTML = '';
+
+        if (data.Response === 'true' && data.search) {
+            data.search.forEach(async (filmeBase) => {
+                const filmeDetalhado = await buscarDetalhes(filmeBase.imdbID);
+                if (filmeDetalhado) {
+                    listaFilmesContainer.appendChild(criarCardFilme(filmeDetalhado));
+                }
+            });
+        } else {
+            listaFilmesContainer.innerHTML = `<p style="text-align: center;">Nenhum filme encontrado para "${termo}".</p>`;
+        }
+    } catch (error) {
+        console.error("Erro ao buscar filmes:", error);
+        listaFilmesContainer.innerHTML = `<p style="text-align: center; color: red;">Erro na conexão com a API.</p>`;
+    }
+}
+
