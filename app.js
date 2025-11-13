@@ -60,3 +60,12 @@ async function buscarFilmes(termo) {
     }
 }
 
+async function buscarDetalhes(imdbID) {
+    try {
+        const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${OMDB_API_KEY}`);
+        const data = await response.json();
+        return data.Response === 'True' ? data : null;
+    } catch (error) {
+        console.error("Erro ao buscar detalhes:", error);
+    }
+}
