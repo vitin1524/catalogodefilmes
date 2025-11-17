@@ -13,13 +13,13 @@ function criarCardFilme(filme) {
     card.dataset.imdbId = filme.imdbID;
     const rating = filme.imdbRating ? `⭐ ${filme.imdbRating}` : `⭐ N/A`
     card.innerHTML = `
-    <img src="${filme.poster !== 'N/A' ? filme.poster : 'placeholder.jpg'}"
+    <img src="${filme.Poster !== 'N/A' ? filme.Poster : 'placeholder.jpg'}"
         alt="${filme.title}"
         class="poster-filme">
     <span class="avaliacao">${rating}</span>
     <div class="card-detalhes">
-        <h3 class="titulo-filme">${filme.title} (${filme.year})</h3>
-        <buttton class="botao-adicionar" data-title="${filme.title}">
+        <h3 class="titulo-filme">${filme.Title} (${filme.Year})</h3>
+        <buttton class="botao-adicionar" data-title="${filme.Title}">
             + Minha Lista
         </button>
     </div>
