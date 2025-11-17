@@ -14,7 +14,7 @@ function criarCardFilme(filme) {
     const rating = filme.imdbRating ? `⭐ ${filme.imdbRating}` : `⭐ N/A`
     card.innerHTML = `
     <img src="${filme.Poster !== 'N/A' ? filme.Poster : 'placeholder.jpg'}"
-        alt="${filme.title}"
+        alt="${filme.Title}"
         class="poster-filme">
     <span class="avaliacao">${rating}</span>
     <div class="card-detalhes">
